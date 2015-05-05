@@ -6,12 +6,9 @@ module OrganicSitemap
       end
 
       def call(env)
-        start = Time.now
         status, headers, response = @app.call(env)
-        stop = Time.now
         if healty_url(status, headers, response, env)
-          p env['HTTP_HOST'] + env['REQUEST_URI']
-          p '*' * 100
+          OrganicSitemap::RedisManager.add(env['REQUEST_PATH'])
         end
         [status, headers, response]
       end
