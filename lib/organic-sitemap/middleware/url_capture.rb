@@ -9,7 +9,7 @@ module OrganicSitemap
         status, headers, response = @app.call(env)
         request = Rack::Request.new env
         if sitemap_url(status, headers, response, request, env)
-          OrganicSitemap::RedisManager.add(env['REQUEST_PATH'])
+          OrganicSitemap::RedisManager.add(request.path_info)
         end
         [status, headers, response]
       end
