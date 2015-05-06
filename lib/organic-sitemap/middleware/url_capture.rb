@@ -7,13 +7,13 @@ module OrganicSitemap
 
       def call(env)
         status, headers, response = @app.call(env)
-        if healty_url(status, headers, response, env)
+        if healthy_url(status, headers, response, env)
           OrganicSitemap::RedisManager.add(env['REQUEST_PATH'])
         end
         [status, headers, response]
       end
 
-      def healty_url(status, headers, response, env)
+      def healthy_url(status, headers, response, env)
         success_response(status) && html_page(headers) && get_method?(env)
       end
 
