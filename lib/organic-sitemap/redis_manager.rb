@@ -1,7 +1,7 @@
 module OrganicSitemap
   class RedisManager
     def self.add(key)
-      OrganicSitemap.redis_connection.zadd(OrganicSitemap.redis_key
+      OrganicSitemap.redis_connection.zadd(OrganicSitemap.redis_key,
                                           Time.now.to_i + OrganicSitemap.expiry_time,
                                           key)
     end
