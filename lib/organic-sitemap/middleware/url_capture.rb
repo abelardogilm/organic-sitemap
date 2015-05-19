@@ -17,14 +17,14 @@ module OrganicSitemap
       private
 
       def sitemap_url(status, headers, response, request, env)
-        success_response(status) && html_page(response) && request.get? && is_expected_domain?(request) && is_allowed_url(request)
+        success_response?(status) && html_page?(response) && request.get? && is_expected_domain?(request) && is_allowed_url?(request)
       end
 
-      def success_response(status)
+      def success_response?(status)
         status == 200
       end
 
-      def html_page(response)
+      def html_page?(response)
         response.content_type.include? "text/html"
       end
 
@@ -34,7 +34,7 @@ module OrganicSitemap
         OrganicSitemap.domains.include? request.host
       end
 
-      def is_allowed_url(request)
+      def is_allowed_url?(request)
         # Any domain if not explicitly configured
         return true unless OrganicSitemap.skipped_urls.any?
         !OrganicSitemap.skipped_urls.include? request.path
