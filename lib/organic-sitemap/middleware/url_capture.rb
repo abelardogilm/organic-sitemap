@@ -17,33 +17,34 @@ module OrganicSitemap
       private
 
       def sitemap_url(status, headers, response, request, env)
-        success_response?(status) && html_page?(response) && request.get? && is_expected_domain?(request) && is_allowed_url?(request)
+        success_response?(status) && html_page?(headers) && request.get? && is_expected_domain?(request) && is_allowed_url?(request)
       end
 
       def success_response?(status)
         status == 200
       end
 
-      def html_page?(response)
-        response.content_type.include? "text/html"
+      def html_page?(headers)
+        p headers
+        headers["Content-Type"]["text/html"]
       end
 
       def is_expected_domain?(request)
         # Any domain if not explicitly configured
-        return true if OrganicSitemap.domains.nil?
-        OrganicSitemap.domains.include? request.host
+        return true if OrganicSitemap.configuration.domains.nil?
+        OrganicSitemap.configuration.domains.include? request.host
       end
 
       def is_allowed_url?(request)
         # Any domain if not explicitly configured
-        return true unless OrganicSitemap.skipped_urls.any?
-        !OrganicSitemap.skipped_urls.include? request.path
+        return true unless OrganicSitemap.configuration.skipped_urls.any?
+        !OrganicSitemap.configuration.skipped_urls.include? request.path
       end
 
       def sanitize_path_info(request)
         query_string = Rack::Utils.parse_nested_query(request.query_string)
 
-        [*OrganicSitemap.skipped_params].each{|sp| query_string.reject!{|x,_| x[sp]}}
+        query_string.select!{|x,_| OrganicSitemap.configuration.allowed_params.include? x }
 
         sanitize_url = request.path
         sanitize_url << "?#{Rack::Utils.build_query(query_string.sort)}" if query_string.any?

@@ -1,20 +1,24 @@
-module Configuration
-  def configuration
-    yield self
+module OrganicSitemap
+  class << self
+    attr_accessor :configuration
   end
-  def define_setting(name, default = nil)
-    class_variable_set("@@#{name}", default)
-    define_class_method "#{name}=" do |value|
-      class_variable_set("@@#{name}", value)
-    end
-    define_class_method name do
-      class_variable_get("@@#{name}")
-    end
+
+  def self.configure
+    self.configuration ||= Configuration.new
+    yield(configuration) if block_given?
   end
-  private
-  def define_class_method(name, &block)
-    (class << self; self; end).instance_eval do
-      define_method name, &block
+
+  class Configuration
+    attr_accessor :storage, :storage_key, :domains, :allowed_params,
+                  :skipped_urls, :redis_connection, :expiry_time
+
+    def initialize
+      @storage          = 'redis'
+      @storage_key      = 'sitemap-urls'
+      @allowed_params   = []
+      @skipped_urls     = []
+      @redis_connection = Redis.new(url: 'redis://127.0.0.1:6379')
+      @expiry_time      = 7
     end
   end
 end

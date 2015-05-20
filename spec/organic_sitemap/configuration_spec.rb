@@ -13,9 +13,9 @@ describe "OrganicSitemap#Configuration" do
       default:   nil,
       new_value: 'test.com'
     },
-    'skipped_params' => {
+    'allowed_params' => {
       default:   [],
-      new_value: ['utm']
+      new_value: ['test']
     },
     'skipped_urls' => {
       default:   [],
@@ -26,13 +26,17 @@ describe "OrganicSitemap#Configuration" do
       new_value: 1
     }
   }.each do |prop, values|
-    describe "PROP: #{prop}" do 
+    describe "PROP: #{prop}" do
+      before do
+        OrganicSitemap.configure
+      end
+
       it 'has default configuration' do
-        expect(OrganicSitemap.send(prop)).to eq(values[:default])
+        expect(OrganicSitemap.configuration.send(prop)).to eq(values[:default])
       end
       it 'can redefine storage value' do
-        OrganicSitemap.send("#{prop}=",  values[:new_value])
-        expect(OrganicSitemap.send(prop)).to eq(values[:new_value])
+        OrganicSitemap.configuration.send("#{prop}=",  values[:new_value])
+        expect(OrganicSitemap.configuration.send(prop)).to eq(values[:new_value])
       end
     end
   end
