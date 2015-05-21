@@ -1,12 +1,10 @@
 module OrganicSitemap
   class UrlProcessor
 
-    attr_accessor :status, :headers, :request, :env
+    attr_accessor :status, :headers, :request
 
-    def initialize(status, headers, env)
-      @request = Rack::Request.new env
-      @status, @headers, @env = status, headers, env
-
+    def initialize(status, headers, request)
+      @status, @headers, @request = status, headers, request
     end
 
     def sanitize_path_info
@@ -45,7 +43,7 @@ module OrganicSitemap
 
     def is_allowed_url?
       # Any url if not explicitly configured
-      return true unless OrganicSitemap.configuration.skipped_urls.present?
+      return true if OrganicSitemap.configuration.skipped_urls.nil?
       [*OrganicSitemap.configuration.skipped_urls].each do |skip_url|
         return false if request.path[skip_url]
       end

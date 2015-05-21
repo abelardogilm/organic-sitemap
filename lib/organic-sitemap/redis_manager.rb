@@ -4,7 +4,7 @@ module OrganicSitemap
       OrganicSitemap.configuration.
                     redis_connection.
                     zadd(OrganicSitemap.configuration.storage_key,
-                         Time.now.to_i + OrganicSitemap.configuration.expiry_time.to_i.days,
+                         (DateTime.now + OrganicSitemap.configuration.expiry_time.to_i).to_time.to_i,
                          key)
     end
 

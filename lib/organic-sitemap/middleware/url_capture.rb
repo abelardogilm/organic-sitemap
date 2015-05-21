@@ -7,7 +7,7 @@ module OrganicSitemap
 
       def call(env)
         status, headers, response = @app.call(env)
-        processor = OrganicSitemap::UrlProcessor.new(status, headers, env)
+        processor = OrganicSitemap::UrlProcessor.new(status, headers, Rack::Request.new(env))
         if processor.sitemap_url?
           OrganicSitemap::RedisManager.add(processor.sanitize_path_info)
         end
