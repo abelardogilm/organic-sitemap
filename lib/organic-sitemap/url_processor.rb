@@ -45,7 +45,7 @@ module OrganicSitemap
 
     def is_allowed_url?
       # Any url if not explicitly configured
-      return true unless OrganicSitemap.configuration.skipped_urls.any?
+      return true unless OrganicSitemap.configuration.skipped_urls.present?
       [*OrganicSitemap.configuration.skipped_urls].each do |skip_url|
         return false if request.path[skip_url]
       end
