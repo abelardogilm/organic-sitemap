@@ -1,6 +1,7 @@
 require 'organic-sitemap/version'
 require 'organic-sitemap/redis_manager'
 require 'organic-sitemap/configuration'
+require 'organic-sitemap/url_processor'
 require 'redis'
 
 if defined? Rails
