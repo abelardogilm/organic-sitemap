@@ -27,8 +27,8 @@ describe "OrganicSitemap#Configuration" do
     }
   }.each do |prop, values|
     describe "PROP: #{prop}" do
-      before do
-        OrganicSitemap.configure
+      after do
+        OrganicSitemap.configuration.send("#{prop}=", values[:default])
       end
 
       it 'has default configuration' do
