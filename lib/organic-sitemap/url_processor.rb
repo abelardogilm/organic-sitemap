@@ -16,9 +16,8 @@ module OrganicSitemap
       sanitize_url << "?#{Rack::Utils.build_query(query_string.sort)}" if query_string.any?
       sanitize_url
     rescue => e
-      p '*' * 100
-      p "ERROR: " + e
-      '/'
+      p "OrganicSitemap ERROR: sanitizing #{request.path} raise error"
+      p "OrganicSitemap ERROR: " + e
     end
 
     def sitemap_url?

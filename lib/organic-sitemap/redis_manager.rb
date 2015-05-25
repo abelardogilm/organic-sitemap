@@ -1,6 +1,7 @@
 module OrganicSitemap
   class RedisManager
     def self.add(key)
+      return unless key
       OrganicSitemap.configuration.
                     redis_connection.
                     zadd(OrganicSitemap.configuration.storage_key,
