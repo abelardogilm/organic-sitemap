@@ -33,6 +33,9 @@ OrganicSitemap.configure do |config|
   #                         ".txt$",
   #                         ".rss$" ] 
 
+  # OrganicSitemap ignore query_params to identify urls. You can add you allowed params
+  # config.allowed_params = [...]
+
   # By default, all urls are saved on Redis.new(url: 'redis://127.0.0.1:6379'), but you can set you own connection
   # config.redis_connection = Your redis connection
 end
