@@ -38,7 +38,6 @@ OrganicSitemap.configure do |config|
 
   # By default, all urls are saved on Redis.new(url: 'redis://127.0.0.1:6379'), but you can set you own connection
   # config.redis_connection = Your redis connection
-end
 
   # url are saved on a set on redis called "sitemap-urls", but if you want you can change it
   # config.storage_key = your key
@@ -47,6 +46,11 @@ end
   # config.expiry_time = X
 end
 ```
+## Rails config generator
+
+Copy base config file on your Rails app by
+
+```rails generator organic_sitemap:config```
 
 ## Contribution
 
