@@ -6,7 +6,7 @@ require 'organic-sitemap/version'
 Gem::Specification.new do |spec|
   spec.name          = "organic-sitemap"
   spec.version       = OrganicSitemap::VERSION
-  spec.authors       = ["Abelardo"]
+  spec.authors       = ["Kaskito"]
   spec.email         = ["abelardogilm@gmail.com"]
 
   spec.summary       = %q{Create your Sitemap in a organic way.}
