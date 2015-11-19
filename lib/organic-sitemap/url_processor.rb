@@ -24,6 +24,10 @@ module OrganicSitemap
       success_response? && html_page? && request.get? && is_expected_domain? && is_allowed_url?
     end
 
+    def url_from_cache_valid?
+      success_response? && html_page? && is_expected_domain?
+    end
+
     private
 
     def success_response?

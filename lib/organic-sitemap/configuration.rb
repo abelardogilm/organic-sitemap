@@ -11,6 +11,7 @@ module OrganicSitemap
   class Configuration
     attr_accessor :storage, :storage_key, :domains, :allowed_params,
                   :skipped_urls, :redis_connection, :expiry_time
+    attr_accessor :crawler_domain, :crawler_delay
 
     def initialize
       @storage          = 'redis'
@@ -19,6 +20,7 @@ module OrganicSitemap
       @skipped_urls     = []
       @redis_connection = Redis.new(url: 'redis://127.0.0.1:6379')
       @expiry_time      = 7
+      @crawler_delay    = 5
     end
   end
 end
