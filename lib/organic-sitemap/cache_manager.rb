@@ -1,7 +1,9 @@
 module OrganicSitemap
   class CacheManager
-    def self.uncached_url(expiration_time)
-      OrganicSitemap::RedisManager.sitemap_urls(from: Time.now, to: to(expiration_time))
+    def self.uncached_urls(expiration_time:, url_pattern: "")
+      opts = {from: Time.now, to: to(expiration_time)}
+      urls = OrganicSitemap::RedisManager.sitemap_urls(opts)
+      urls.select{|x| x[url_pattern]}
     end
 
     private
