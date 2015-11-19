@@ -19,4 +19,11 @@ OrganicSitemap.configure do |config|
   # after this time, if no one load this page, it will be removed from the set.
   # To change it (number of days):
   # config.expiry_time = X
+
+  # Crawler needs a domain to mount urls to visit
+  config.crawler_domain = "http://mi.domain.com"
+
+  # By default crawler_delay is 5sec. This is the time between get each url
+  # To change it (seconds of delay):
+  # config.crawler_delay = x 
 end

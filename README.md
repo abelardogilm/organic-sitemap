@@ -36,16 +36,68 @@ OrganicSitemap.configure do |config|
   # OrganicSitemap ignore query_params to identify urls. You can add you allowed params
   # config.allowed_params = [...]
 
-  # By default, all urls are saved on Redis.new(url: 'redis://127.0.0.1:6379'), but you can set you own connection
+  # By default, all urls are saved on Redis.new(url: 'redis://127.0.0.1:6379'),
+  # but you can set you own connection
   # config.redis_connection = Your redis connection
 
   # url are saved on a set on redis called "sitemap-urls", but if you want you can change it
   # config.storage_key = your key
   
-  # By dafault all url have a expiry time in 7 days, after this time, if no one load this page, it will be removed from the set. To change it (expect number of days):
+  # By dafault all url have a expiry time in 7 days
+  # after this time, if no one load this page, it will be removed from the set.
+  # To change it (number of days):
   # config.expiry_time = X
+
+  # Crawler needs a domain to mount urls to visit
+  config.crawler_domain = "http://mi.domain.com"
+
+  # By default crawler_delay is 5sec. This is the time between get each url
+  # To change it (seconds of delay):
+  # config.crawler_delay = x
 end
 ```
+
+## Crawler and cache Services
+
+If have a front cache service, this services allow you to use your score sitemap to warmup this expire urls
+
+When a page is loaded, score is update with current time and this told as when last cache occurs. Using it we can get all expired urls, and visit they to warm it up.
+
+To configure it:
+
+### On initializer define:
+```
+  # Crawler needs a domain to mount urls to visit
+  config.crawler_domain = "http://mi.domain.com"
+
+  # By default crawler_delay is 5sec. This is the time between get each url
+  # To change it (seconds of delay):
+  # config.crawler_delay = x
+```
+
+With **CacheManager.uncached_urls(expiration_time: CacheExpirationTime, url_pattern: PATTERN)** we get all url not hitted on this time (all expired urls)
+
+Example:
+```
+# Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago
+OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours)
+
+# Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago and contains "/test/" string
+OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern: "/test/")
+
+# Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago and match ^\/test\/ regexp
+OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern: /^\/test\//)
+
+
+```
+The with **CrawlerManager.warmup(urls)** we visit all this urls with a delay setted on configuration file (by default 5 sec). When we visit a url, *RedisManager* update score for this url and will be no more visited until not expire cache time
+
+Example:
+```
+# For a 1.day page cache
+CrawlerManager.warmup(CacheManager.uncached_urls(expiration_time: 3.hours))
+```
+
 ## Rails config generator
 
 Copy base config file on your Rails app by

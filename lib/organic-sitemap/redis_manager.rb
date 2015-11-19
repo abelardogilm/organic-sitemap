@@ -26,6 +26,7 @@ module OrganicSitemap
         remove_key key
       end
     end
+
     private
     def self.redis_connection
       OrganicSitemap.configuration.redis_connection

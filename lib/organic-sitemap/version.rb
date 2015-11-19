@@ -1,3 +1,3 @@
 module OrganicSitemap
-  VERSION = "0.1.2" # Add more redis Z methods
+  VERSION = "0.1.3" # Add cache_service and crawler_service
 end

@@ -24,6 +24,14 @@ describe "OrganicSitemap#Configuration" do
     'expiry_time' => {
       default:   7,
       new_value: 1
+    },
+    'crawler_domain' => {
+      default:   nil,
+      new_value: "http://test.com"
+    },
+    'crawler_delay' => {
+      default:   5,
+      new_value: 1
     }
   }.each do |prop, values|
     describe "PROP: #{prop}" do
