@@ -20,7 +20,7 @@ module OrganicSitemap
       @skipped_urls     = []
       @redis_connection = Redis.new(url: 'redis://127.0.0.1:6379')
       @expiry_time      = 7
-      @crawler_delay    = 5
+      @crawler_delay    = nil
     end
   end
 end

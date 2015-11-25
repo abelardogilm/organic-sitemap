@@ -90,12 +90,15 @@ OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern
 
 
 ```
-The with **CrawlerManager.warmup(urls)** we visit all this urls with a delay setted on configuration file (by default 5 sec). When we visit a url, *RedisManager* update score for this url and will be no more visited until not expire cache time
+The with **CrawlerManager.warmup(urls, opts={})** we visit all this urls. We can set a delay between each page load setting a delay on configuration file. When we visit a url, *RedisManager* update score for this url and will be no more visited until not expire cache time
 
 Example:
 ```
-# For a 1.day page cache
+# For a 3.hours page cache, get page with user-agent='Ruby'
 CrawlerManager.warmup(CacheManager.uncached_urls(expiration_time: 3.hours))
+
+# Get '/test' with user-agent='Crawler-bot'
+CrawlerManager.warmup('/test', {headers: {"User-Agent" => 'Crawler-bot'}})
 ```
 
 ## Rails config generator

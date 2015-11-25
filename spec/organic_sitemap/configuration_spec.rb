@@ -30,7 +30,7 @@ describe "OrganicSitemap#Configuration" do
       new_value: "http://test.com"
     },
     'crawler_delay' => {
-      default:   5,
+      default:   nil,
       new_value: 1
     }
   }.each do |prop, values|

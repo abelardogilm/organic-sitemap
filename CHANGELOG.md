@@ -1,3 +1,9 @@
+## 0.2.0
+
+### Changed
+
+- Let crawler_service accept Httparty options
+
 ## 0.1.3
 
 ### Changed
