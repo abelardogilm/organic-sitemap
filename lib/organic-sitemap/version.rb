@@ -1,3 +1,3 @@
 module OrganicSitemap
-  VERSION = "0.2.0" # Add cache_service and crawler_service
+  VERSION = "0.2.1" # Improve crawler_manager warmup response
 end

@@ -1,3 +1,9 @@
+## 0.2.1
+
+### Changed
+
+- Improve response of crawler_manager warmup method
+
 ## 0.2.0
 
 ### Changed
