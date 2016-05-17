@@ -25,5 +25,11 @@ OrganicSitemap.configure do |config|
 
   # By default crawler_delay is 5sec. This is the time between get each url
   # To change it (seconds of delay):
-  # config.crawler_delay = x 
+  # config.crawler_delay = x
+
+  # By default, do nothing with urls that not return 200.
+  # If you want remove automatically 301 urls from Redis
+  # config.clean_redirects = true
+  # If you want remove automatically 404 urls from Redis
+  # config.clean_not_found = true
 end

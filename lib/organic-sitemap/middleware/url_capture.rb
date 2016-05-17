@@ -10,6 +10,8 @@ module OrganicSitemap
         processor = OrganicSitemap::UrlProcessor.new(status, headers, Rack::Request.new(env))
         if processor.sitemap_url?
           OrganicSitemap::RedisManager.add(processor.sanitize_path_info)
+        elsif processor.cleanable_url?
+          OrganicSitemap::RedisManager.remove_key(key: processor.sanitize_path_info)
         end
         [status, headers, response]
       end

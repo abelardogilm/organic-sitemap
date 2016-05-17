@@ -32,6 +32,14 @@ describe "OrganicSitemap#Configuration" do
     'crawler_delay' => {
       default:   nil,
       new_value: 1
+    },
+    'clean_redirects' => {
+      default:   false,
+      new_value: true
+    },
+    'clean_not_found' => {
+      default:   false,
+      new_value: true
     }
   }.each do |prop, values|
     describe "PROP: #{prop}" do

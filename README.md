@@ -13,13 +13,11 @@ OrganicSitemap is a gem that gives you a structure to manage your sitemap with h
 Uses a **Redis** connection to save sitemaps urls
 
 ## Installation
-OrganicSearch is not available as a gem yet, you can load it using my github account.
+Put this line in your Gemfile:
 
-Add in your Gemfile:
+```gem 'organic-sitemap'```
 
-```gem 'organic-sitemap', :git => 'git://github.com/abelardogilm/organic-sitemap.git'```
-
-Run ```bundle install.```
+Run ```bundle install```
 
 ## Configuration
 
@@ -54,6 +52,12 @@ OrganicSitemap.configure do |config|
   # By default crawler_delay is 5sec. This is the time between get each url
   # To change it (seconds of delay):
   # config.crawler_delay = x
+
+  # By default, do nothing with urls that not return 200.
+  # If you want remove automatically 301 urls from Redis
+  # config.clean_redirects = true
+  # If you want remove automatically 404 urls from Redis
+  # config.clean_not_found = true
 end
 ```
 
@@ -77,7 +81,7 @@ To configure it:
 
 With **CacheManager.uncached_urls(expiration_time: CacheExpirationTime, url_pattern: PATTERN)** we get all url not hitted on this time (all expired urls)
 
-Example:
+*** Examples
 ```
 # Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago
 OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours)
@@ -88,11 +92,11 @@ OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern
 # Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago and match ^\/test\/ regexp
 OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern: /^\/test\//)
 
-
 ```
+
 The with **CrawlerManager.warmup(urls, opts={})** we visit all this urls. We can set a delay between each page load setting a delay on configuration file. When we visit a url, *RedisManager* update score for this url and will be no more visited until not expire cache time
 
-Example:
+*** Examples
 ```
 # For a 3.hours page cache, get page with user-agent='Ruby'
 CrawlerManager.warmup(CacheManager.uncached_urls(expiration_time: 3.hours))

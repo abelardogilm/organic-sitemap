@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kaskito"]
   spec.email         = ["abelardogilm@gmail.com"]
 
-  spec.summary       = %q{Create your Sitemap in a organic way.}
-  spec.description   = %q{Create your Sitemap in a organic way.}
+  spec.summary       = %q{Lets Users and Bots to create our Sitemap in a organic way.}
+  spec.description   = %q{Lets Users and Bots to create our Sitemap in a organic way.}
   spec.homepage      = "https://github.com/abelardogilm/organic-sitemap/"
   spec.license       = "MIT"
 

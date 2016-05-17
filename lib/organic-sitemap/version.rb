@@ -1,3 +1,3 @@
 module OrganicSitemap
-  VERSION = "0.2.1" # Improve crawler_manager warmup response
+  VERSION = "0.3.0" # Add remove 301 and 404 functionality
 end

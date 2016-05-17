@@ -1,3 +1,9 @@
+## 0.3.0
+
+### Changed
+
+- Add posibility to remove urls from collection if 404 or 301 response code
+
 ## 0.2.1
 
 ### Changed

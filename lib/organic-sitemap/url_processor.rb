@@ -28,6 +28,18 @@ module OrganicSitemap
       success_response? && html_page? && is_expected_domain?
     end
 
+    def cleanable_url?
+      redirect_response? || not_found_response?
+    end
+
+    def redirect_response?
+      OrganicSitemap.configuration.clean_redirects && status == 301
+    end
+
+    def not_found_response?
+      OrganicSitemap.configuration.clean_not_found && status == 404
+    end
+
     private
 
     def success_response?
