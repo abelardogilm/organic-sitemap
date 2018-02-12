@@ -23,7 +23,7 @@ Run ```bundle install```
 
 To setup this gem you should add your config:
 
-```
+```ruby
 OrganicSitemap.configure do |config|
   
   # Add here all regexp you don't want to add on your sitemap
@@ -61,7 +61,7 @@ OrganicSitemap.configure do |config|
 end
 ```
 
-## Crawler and cache Services
+## Crawler and cache Services
 
 If have a front cache service, this services allow you to use your score sitemap to warmup this expire urls
 
@@ -70,7 +70,8 @@ When a page is loaded, score is update with current time and this told as when l
 To configure it:
 
 ### On initializer define:
-```
+
+```ruby
   # Crawler needs a domain to mount urls to visit
   config.crawler_domain = "http://mi.domain.com"
 
@@ -82,7 +83,8 @@ To configure it:
 With **CacheManager.uncached_urls(expiration_time: CacheExpirationTime, url_pattern: PATTERN)** we get all url not hitted on this time (all expired urls)
 
 *** Examples
-```
+
+```ruby
 # Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago
 OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours)
 
@@ -91,13 +93,13 @@ OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern
 
 # Return urls not visited between 1.week.ago(setted on config.expiry_time) and 3.hours.ago and match ^\/test\/ regexp
 OrganicSitemap::CacheManager.uncached_urls(expiration_time: 3.hours, url_pattern: /^\/test\//)
-
 ```
 
 The with **CrawlerManager.warmup(urls, opts={})** we visit all this urls. We can set a delay between each page load setting a delay on configuration file. When we visit a url, *RedisManager* update score for this url and will be no more visited until not expire cache time
 
 *** Examples
-```
+
+```ruby
 # For a 3.hours page cache, get page with user-agent='Ruby'
 CrawlerManager.warmup(CacheManager.uncached_urls(expiration_time: 3.hours))
 
@@ -109,12 +111,14 @@ CrawlerManager.warmup('/test', {headers: {"User-Agent" => 'Crawler-bot'}})
 
 Copy base config file on your Rails app by
 
-```rails generator organic_sitemap:config```
+```sh
+$ rails generator organic_sitemap:config
+```
 
-## Contribution
+## Contribution
 
 If you have cool idea for improving this Gem or any bug fix just open a pull request and I'll be glad to have a look and merge it if seems fine.
 
-## License
+## License
 
 This project rocks and uses [MIT-LICENSE](https://github.com/abelardogilm/organic-sitemap/blob/master/LICENSE.txt).
